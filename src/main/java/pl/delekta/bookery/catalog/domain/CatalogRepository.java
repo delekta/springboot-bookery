@@ -1,0 +1,9 @@
+package pl.delekta.bookery.catalog.domain;
+
+import java.util.List;
+
+public interface CatalogRepository {
+    List<Book> findAll();
+}
+
+
