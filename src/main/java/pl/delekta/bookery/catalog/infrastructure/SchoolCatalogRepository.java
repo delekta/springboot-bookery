@@ -18,7 +18,7 @@ class SchoolCatalogRepository implements CatalogRepository {
         storage.put(1L, new Book(1L, "Pan Tadeusz", "Henryk Sienkiewicz"));
         storage.put(2L, new Book(2L, "Pan Wołodyjowski", "Kamil Delekta"));
         storage.put(3L, new Book(3L, "Harry Portier", "Portier Zbychu"));
-        storage.put(4L, new Book(3L, "Pan Paweł", "Portier Zbychu"));
+        storage.put(4L, new Book(4L, "Pan Paweł", "Portier Zbychu"));
     }
 
     @Override

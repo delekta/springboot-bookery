@@ -29,6 +29,14 @@ public class CatalogService implements pl.delekta.bookery.catalog.application.po
     }
 
     @Override
+    public List<Book> findByAuthor(String author) {
+        return repository.findAll()
+                .stream()
+                .filter(book -> book.getAuthor().startsWith(author))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<Book> findAll() {
         return null;
     }

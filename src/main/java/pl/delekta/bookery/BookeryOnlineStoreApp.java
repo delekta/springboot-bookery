@@ -8,7 +8,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class BookeryOnlineStoreApp {
 	public static void main(String[] args) {
 		ConfigurableApplicationContext context = SpringApplication.run(BookeryOnlineStoreApp.class, args);
-		System.out.println(context);
+//		System.out.println(context);
 	}
 
 }

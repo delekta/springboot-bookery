@@ -18,7 +18,7 @@ class BestsellerCatalogRepository implements CatalogRepository {
         storage.put(1L, new Book(1L, "Zostan Legenda", "Henryk Sienkiewicz"));
         storage.put(2L, new Book(2L, "Elon Musk - Autobiografia", "Kamil Delekta"));
         storage.put(3L, new Book(3L, "Incepcja", "Portier Zbychu"));
-        storage.put(4L, new Book(3L, "Jak zjednac sobie ludzi", "Portier Zbychu"));
+        storage.put(4L, new Book(4L, "Jak zjednac sobie ludzi", "Portier Zbychu"));
     }
 
     @Override
