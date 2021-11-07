@@ -1,5 +1,6 @@
 package pl.delekta.bookery.catalog.application.port;
 
+import lombok.Value;
 import pl.delekta.bookery.catalog.domain.Book;
 
 import java.util.List;
@@ -14,9 +15,16 @@ public interface CatalogUseCase {
 
     Optional<Book> findOneByTitleAndAuthor(String title, String author);
 
-    void addBook();
+    void addBook(CreateBookCommand command);
 
     void removeById(Long id);
 
     void updateBook();
+
+    @Value
+    class CreateBookCommand {
+        String title;
+        String author;
+        Integer year;
+    }
 }

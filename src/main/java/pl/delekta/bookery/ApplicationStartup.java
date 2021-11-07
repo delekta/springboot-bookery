@@ -26,6 +26,18 @@ public class ApplicationStartup implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        initData();
+        findByAuthor();
+    }
+
+    private void initData() {
+        catalog.addBook(new CatalogUseCase.CreateBookCommand("Zostan Legenda", "Henryk Sienkiewicz",2000));
+        catalog.addBook(new CatalogUseCase.CreateBookCommand("Elon Musk - Autobiografia", "Kamil Delekta", 2000));
+        catalog.addBook(new CatalogUseCase.CreateBookCommand("Incepcja", "Portier Zbychu", 2000));
+        catalog.addBook(new CatalogUseCase.CreateBookCommand("Jak zjednac sobie ludzi", "Portier Zbychu", 2000));
+    }
+
+    private void findByAuthor() {
         List<Book> books = catalog.findByAuthor(author);
         books.stream().limit(limit).forEach(System.out::println);
     }
