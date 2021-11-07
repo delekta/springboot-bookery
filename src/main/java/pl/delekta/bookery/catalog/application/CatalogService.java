@@ -8,6 +8,8 @@ import pl.delekta.bookery.catalog.application.port.CatalogUseCase;
 import pl.delekta.bookery.catalog.domain.Book;
 import pl.delekta.bookery.catalog.domain.CatalogRepository;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,14 +38,19 @@ public class CatalogService implements CatalogUseCase {
     }
 
     @Override
-    public List<Book> findAll() {
-        return null;
+    public Optional<Book> findOneByTitleAndAuthor(String title, String author) {
+        return repository.findAll()
+                .stream()
+                .filter(book -> book.getTitle().startsWith(title))
+                .filter(book -> book.getAuthor().startsWith(author))
+                .findFirst();
     }
 
     @Override
-    public Optional<Book> findOneByTitleAndAuthor(String title, String author) {
-        return Optional.empty();
+    public List<Book> findAll() {
+        return repository.findAll();
     }
+
 
     @Override
     public void addBook(CreateBookCommand command) {
@@ -52,12 +59,17 @@ public class CatalogService implements CatalogUseCase {
     }
 
     @Override
-    public void removeById(Long id) {
-
+    public UpdateBookResponse updateBook(UpdateBookCommand command) {
+        return repository.findById(command.getId())
+                .map(book -> {
+                    Book updatedBook = command.updateFields(book);
+                    repository.save(updatedBook);
+                    return UpdateBookResponse.SUCCESS;
+                }).orElseGet(() -> new UpdateBookResponse(false, Collections.singletonList("Book not found with id: " + command.getId())));
     }
 
     @Override
-    public void updateBook() {
-
+    public void removeById(Long id) {
+        repository.removeById(id);
     }
 }
