@@ -11,13 +11,22 @@ import pl.delekta.bookery.catalog.application.port.CatalogUseCase.UpdateBookComm
 import pl.delekta.bookery.catalog.application.port.CatalogUseCase;
 import pl.delekta.bookery.catalog.application.port.CatalogUseCase.UpdateBookResponse;
 import pl.delekta.bookery.catalog.domain.Book;
+import pl.delekta.bookery.order.application.port.PlaceOrderUseCase;
+import pl.delekta.bookery.order.application.port.PlaceOrderUseCase.PlaceOrderResponse;
+import pl.delekta.bookery.order.application.port.PlaceOrderUseCase.PlaceOrderCommand;
+import pl.delekta.bookery.order.application.port.QueryOrderUseCase;
+import pl.delekta.bookery.order.domain.OrderItem;
+import pl.delekta.bookery.order.domain.Recipient;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 public class ApplicationStartup implements CommandLineRunner {
     private final CatalogUseCase catalog;
+    private final PlaceOrderUseCase placeOrder;
+    private final QueryOrderUseCase queryOrder;
 
     @Value("${bookery.book.title:Pan}")
     private String title;
@@ -31,16 +40,53 @@ public class ApplicationStartup implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         initData();
+        searchCatalog();
+        placeOrder();
+    }
+
+    private void placeOrder() {
+        Book book1 = catalog.findOneByTitle("Zostan").orElseThrow(() -> new IllegalArgumentException("Cannot find a book"));
+        Book book2 = catalog.findOneByTitle("Elon").orElseThrow(() -> new IllegalArgumentException("Cannot find a book"));
+
+        Recipient recipient = Recipient
+                .builder()
+                .name("Name")
+                .phone("Phone")
+                .street("Street")
+                .city("Krakow")
+                .zipCode("ZipCode")
+                .email("Email")
+                .build();
+
+        PlaceOrderCommand command = PlaceOrderCommand.builder()
+                .recipient(recipient)
+                .item(new OrderItem(book1, 16))
+                .item(new OrderItem(book2, 4))
+                .build();
+
+        PlaceOrderResponse response = placeOrder.placeOrder(command);
+        System.out.println("Created ORDER with id: " + response.getOrderId());
+
+        queryOrder.findAll()
+                .forEach(order -> {
+                    System.out.println("Got order with total price: " + order.totalPrice() + " details: " + order);
+                });
+
+
+
+    }
+
+    private void searchCatalog() {
         findByAuthor();
         findAndUpdate();
         findByAuthor();
     }
 
     private void initData() {
-        catalog.addBook(new CreateBookCommand("Zostan Legenda", "Henryk Sienkiewicz",2000));
-        catalog.addBook(new CreateBookCommand("Elon Musk - Autobiografia", "Kamil Delekta", 2000));
-        catalog.addBook(new CreateBookCommand("Incepcja", "Portier Zbychu", 2000));
-        catalog.addBook(new CreateBookCommand("Jak zjednac sobie ludzi", "Portier Zbychu", 2000));
+        catalog.addBook(new CreateBookCommand("Zostan Legenda", "Henryk Sienkiewicz",2000, new BigDecimal(10)));
+        catalog.addBook(new CreateBookCommand("Elon Musk - Autobiografia", "Kamil Delekta", 2000, new BigDecimal(20)));
+        catalog.addBook(new CreateBookCommand("Incepcja", "Portier Zbychu", 2000, new BigDecimal(30)));
+        catalog.addBook(new CreateBookCommand("Jak zjednac sobie ludzi", "Portier Zbychu", 2000, new BigDecimal(40)));
     }
 
     private void findByAuthor() {

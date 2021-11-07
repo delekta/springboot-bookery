@@ -1,5 +1,6 @@
 package pl.delekta.bookery.order.domain;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.Value;
 
@@ -8,16 +9,22 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
+@Builder
 public class Order {
     private Long id;
+
     private List<OrderItem> items;
+
     private Recipient recipient;
-    private OrderStatus status;
+
+    @Builder.Default
+    private OrderStatus status = OrderStatus.NEW;
+
     private LocalDateTime createdAt;
 
-    BigDecimal totalPrice() {
+    public BigDecimal totalPrice() {
         return items.stream()
-                .map(item -> item.getBook().getPrice())
+                .map(item -> item.getBook().getPrice().multiply(new BigDecimal(item.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
