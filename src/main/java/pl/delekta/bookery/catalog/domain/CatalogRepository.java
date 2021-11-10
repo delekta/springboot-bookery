@@ -7,7 +7,7 @@ public interface CatalogRepository {
     List<Book> findAll();
     Optional<Book> findById(Long id);
 
-    void save(Book book);
+    Book save(Book book);
     void removeById(Long id);
 }
 

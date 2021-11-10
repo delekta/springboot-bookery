@@ -14,13 +14,19 @@ public interface CatalogUseCase {
 
     Optional<Book> findOneByTitle(String title);
 
+    Optional<Book> findOneByAuthor(String author);
+
     List<Book> findByAuthor(String author);
 
     List<Book> findAll();
 
+    Optional<Book> findById(Long id);
+
     Optional<Book> findOneByTitleAndAuthor(String title, String author);
 
-    void addBook(CreateBookCommand command);
+    List<Book> findByTitleAndAuthor(String title, String author);
+
+    Book addBook(CreateBookCommand command);
 
     UpdateBookResponse updateBook(UpdateBookCommand command);
 
