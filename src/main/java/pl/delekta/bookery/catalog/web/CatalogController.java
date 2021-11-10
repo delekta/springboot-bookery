@@ -2,18 +2,23 @@ package pl.delekta.bookery.catalog.web;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import pl.delekta.bookery.catalog.application.port.CatalogUseCase;
 import pl.delekta.bookery.catalog.application.port.CatalogUseCase.CreateBookCommand;
 import pl.delekta.bookery.catalog.domain.Book;
 
+import javax.validation.Valid;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.net.URI;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RequestMapping("/catalog")
 @RestController
@@ -48,10 +53,16 @@ public class CatalogController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Void> addBook(@RequestBody RestCreateBookCommand command) {
+    public ResponseEntity<Void> addBook(@Valid @RequestBody RestCreateBookCommand command) {
         Book book = catalog.addBook(command.toCommand());
         URI uri = createBookUri(book);
         return ResponseEntity.created(uri).build();
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable Long id) {
+        catalog.removeById(id);
     }
 
     private URI createBookUri(Book book) {
@@ -60,9 +71,17 @@ public class CatalogController {
 
     @Data
     private static class RestCreateBookCommand {
+        @NotBlank
         private String title;
+
+        @NotBlank
         private String author;
+
+        @NonNull
         private Integer year;
+
+        @NonNull
+        @DecimalMin("0.00")
         private BigDecimal price;
 
         CreateBookCommand toCommand() {
