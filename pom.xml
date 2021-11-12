@@ -19,6 +19,7 @@
 		<lombok.version>1.18.22</lombok.version>
 		<hibernate.validator.version>6.1.5.Final</hibernate.validator.version>
 		<common.langs.version>3.12.0</common.langs.version>
+		<springdoc.openapi.ui.version>1.5.12</springdoc.openapi.ui.version>
 	</properties>
 
 	<dependencies>
@@ -27,6 +28,13 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>${hibernate.validator.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>${springdoc.openapi.ui.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>

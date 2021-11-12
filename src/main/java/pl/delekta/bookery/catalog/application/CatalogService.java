@@ -117,4 +117,16 @@ class CatalogService implements CatalogUseCase {
                     book.setCoverId(savedUpload.getId());
                 });
     }
+
+    @Override
+    public void removeBookCover(Long id) {
+        repository.findById(id)
+                .ifPresent(book -> {
+                    if (book.getCoverId() != null) {
+                        upload.removeById(book.getCoverId());
+                        book.setCoverId(null);
+                        repository.save(book);
+                    }
+                });
+    }
 }
