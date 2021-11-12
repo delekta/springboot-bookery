@@ -23,6 +23,16 @@ public class MemoryOrderRepository implements OrderRepository {
     }
 
     @Override
+    public Optional<Order> findById(Long id) {
+        return Optional.ofNullable(storage.get(id));
+    }
+
+    @Override
+    public void removeById(Long id) {
+        storage.remove(id);
+    }
+
+    @Override
     public Order save(Order order) {
         if (order.getId() != null) {
             storage.put(order.getId(), order);

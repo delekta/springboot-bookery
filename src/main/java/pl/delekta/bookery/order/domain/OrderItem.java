@@ -5,7 +5,6 @@ import pl.delekta.bookery.catalog.domain.Book;
 
 @Value
 public class OrderItem {
-    Book book;
+    Long bookId;
     int quantity;
-
 }

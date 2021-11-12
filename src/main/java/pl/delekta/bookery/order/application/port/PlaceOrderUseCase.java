@@ -1,5 +1,6 @@
 package pl.delekta.bookery.order.application.port;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Singular;
 import lombok.Value;
@@ -17,6 +18,7 @@ public interface PlaceOrderUseCase {
 
     @Builder
     @Value
+    @AllArgsConstructor
     class PlaceOrderCommand {
         @Singular
         List<OrderItem> items;
@@ -37,4 +39,5 @@ public interface PlaceOrderUseCase {
             return new PlaceOrderResponse(false, null, Arrays.asList(errors));
         }
     }
+
 }
