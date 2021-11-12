@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import pl.delekta.bookery.catalog.application.port.CatalogUseCase;
 import pl.delekta.bookery.catalog.domain.Book;
 import pl.delekta.bookery.catalog.domain.CatalogRepository;
+import pl.delekta.bookery.uploads.application.ports.UploadUseCase;
+import pl.delekta.bookery.uploads.application.ports.UploadUseCase.SaveUploadCommand;
+import pl.delekta.bookery.uploads.domain.Upload;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,6 +23,7 @@ class CatalogService implements CatalogUseCase {
 
 
     private final CatalogRepository repository;
+    private final UploadUseCase upload;
 
     @Override
     public List<Book> findByTitle(String title) {
@@ -109,8 +113,8 @@ class CatalogService implements CatalogUseCase {
         System.out.println("Received over command: " + command.getFilename() + " bytes: " + length);
         repository.findById(command.getId())
                 .ifPresent(book -> {
-                    //                        book.setCoverId()
-                        }
-                );
+                    Upload savedUpload = upload.save(new SaveUploadCommand(command.getFilename(), command.getFile(), command.getContentType()));
+                    book.setCoverId(savedUpload.getId());
+                });
     }
 }
