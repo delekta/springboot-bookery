@@ -27,6 +27,7 @@ import java.math.BigDecimal;
 import java.net.URI;
 import java.util.*;
 
+@CrossOrigin
 @RequestMapping("/catalog")
 @RestController
 @AllArgsConstructor
