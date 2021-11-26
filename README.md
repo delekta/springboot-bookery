@@ -1,2 +1,6 @@
 # springboot-bookery
-Online bookstore build with SpringBoot
+Online bookstore. 
+
+BookeryService build with **SpringBoot**. 
+
+BookeryWeb build with **Angular**.
