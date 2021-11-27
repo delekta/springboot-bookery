@@ -1,10 +1,10 @@
-version: "3.9"
+version: "3"
 services:
-  frontend:
+  bookery-web:
     ports:
       - "4200:4200"
     image: bookery-web-image
-  backend:
+  bookery-service:
     ports:
       - "8080:8080"
     image: bookery-service-image
