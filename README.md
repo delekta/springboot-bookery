@@ -1,4 +1,4 @@
-# springboot-bookery
+# Bookery
 Online bookstore. 
 
 BookeryService build with **SpringBoot**. 
