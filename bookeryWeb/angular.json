@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "GardenIncFrontend": {
+    "BookeryWeb": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/GardenIncFrontend",
+            "outputPath": "dist/BookeryWeb",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -62,18 +62,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "GardenIncFrontend:build"
+            "browserTarget": "BookeryWeb:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "GardenIncFrontend:build:production"
+              "browserTarget": "BookeryWeb:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "GardenIncFrontend:build"
+            "browserTarget": "BookeryWeb:build"
           }
         },
         "test": {
@@ -110,15 +110,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "GardenIncFrontend:serve"
+            "devServerTarget": "BookeryWeb:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "GardenIncFrontend:serve:production"
+              "devServerTarget": "BookeryWeb:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "GardenIncFrontend"
+  "defaultProject": "BookeryWeb"
 }
