@@ -5,6 +5,8 @@ BookeryService build with **SpringBoot**.
 
 BookeryWeb build with **Angular**.
 
+Containerized with **Docker**
+
 ## Docker
 
 Uruchamiamy aplikację komenda:
